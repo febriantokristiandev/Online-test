@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cari Angka Yang Hilang</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        font-size: 14px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cari Angka Yang Hilang</h1>
+    <p>Masukkan angka-angka dalam array, pisahkan dengan koma (misalnya: 4, 5, 7, 9):</p>
+    <input type="text" id="numberInput" placeholder="Masukkan angka-angka">
+    <button onclick="findMissingNumber()">Cari Angka Yang Hilang</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function findMissingNumber() {
+      const input = document.getElementById('numberInput').value;
+      const arr = input.split(',')
+                       .map(num => parseInt(num.trim()))
+                       .filter(num => !isNaN(num));
+      
+      if (arr.length === 0) {
+        document.getElementById('result').textContent = 'Masukkan angka-angka yang valid.';
+        return;
+      }
+
+      const min = Math.min(...arr);
+      const max = Math.max(...arr);
+
+      const numSet = new Set(arr);
+      let missingNumbers = [];
+      for (let i = min; i <= max; i++) {
+        if (!numSet.has(i)) {
+          missingNumbers.push(i);
+        }
+      }
+      
+      if (missingNumbers.length > 0) {
+        document.getElementById('result').textContent = `Angka yang hilang adalah: ${missingNumbers.join(', ')}`;
+      } else {
+        document.getElementById('result').textContent = 'Tidak ada angka yang hilang.';
+      }
+    }
+  </script>
+</body>
+</html>
